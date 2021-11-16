@@ -4,8 +4,8 @@ import model.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import service.UserService;
 
 @Controller
@@ -44,14 +44,14 @@ public class UsersController {
         return "redirect:/";
     }
 
-    @GetMapping("/delete/{id}")
-    public String deleteById(@PathVariable("id") long id) {
+    @GetMapping("/delete")
+    public String deleteById(@RequestParam long id) {
         userService.deleteById(id);
         return "redirect:/";
     }
 
-    @GetMapping("/update/{id}")
-    public String updateUserForm(@PathVariable("id") long id, Model model) {
+    @GetMapping("/update")
+    public String updateUserForm(@RequestParam long id, Model model) {
         User user = userService.getUserId(id);
         model.addAttribute("user", user);
         return "update";
