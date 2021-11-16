@@ -33,7 +33,7 @@ public class UsersController {
      * и присваивается переменной id.
      */
     @GetMapping("/create")
-    public String createForm(User user,Model model) {
+    public String createForm(User user, Model model) {
         model.addAttribute(user);
         return "/create";
     }
@@ -43,17 +43,20 @@ public class UsersController {
         userService.addUser(user);
         return "redirect:/";
     }
+
     @GetMapping("/delete/{id}")
     public String deleteById(@PathVariable("id") long id) {
         userService.deleteById(id);
         return "redirect:/";
     }
+
     @GetMapping("/update/{id}")
-    public String updateUserForm(@PathVariable("id") long id,Model model) {
-        User user= userService.getUserId(id);
-        model.addAttribute("user",user);
+    public String updateUserForm(@PathVariable("id") long id, Model model) {
+        User user = userService.getUserId(id);
+        model.addAttribute("user", user);
         return "update";
     }
+
     @PostMapping("/update")
     public String updateUser(User user) {
         userService.updateUser(user);

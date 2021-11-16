@@ -1,4 +1,4 @@
-package DAO;
+package dao;
 
 import model.User;
 import org.springframework.stereotype.Repository;
@@ -8,7 +8,7 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
-public class DAO {
+public class UserDaoImpl implements UserDao {
     @PersistenceContext
     private EntityManager em;
 
@@ -16,6 +16,7 @@ public class DAO {
      * Метод Create - даешь в агрументы сущность, метод ее добавляет в контекст постоянства
      * и при commit/rollback обновит базу
      */
+    @Override
     public void create(User a) {
         em.persist(a);
     }
@@ -23,6 +24,7 @@ public class DAO {
     /**
      * Метод Read проверяет есть у сущности id , если есть то вернет обьект под этим ключом
      */
+    @Override
     public User read(long id) {
         return em.find(User.class, id);
     }
@@ -31,14 +33,16 @@ public class DAO {
      * Метод Delete - сначала ищет сущность в БД/PersistentContext,
      * удаляет его(remove) и по окончании транзакции обновляет в базе
      */
+    @Override
     public void delete(long id) {
-        em.remove(em.find(User.class,id));
+        em.remove(em.find(User.class, id));
     }
 
     /**
      * Метод Update добавляет сущность в контекст постоянства и
      * при commit/rollback обновит его состояние в базе
      */
+    @Override
     public void update(User f) {
         em.merge(f);
     }
@@ -46,6 +50,7 @@ public class DAO {
     /**
      * Опциональный метод создания таблицы ( если нет )
      */
+    @Override
     public void createTable() {
         em.createNativeQuery("Create table  if NOT EXISTS users (id BIGINT PRIMARY KEY AUTO_INCREMENT " +
                 "NOT NULL,firstName varchar(256) NOT NULL ,lastName varchar(256) not null,email int not null);");
@@ -54,6 +59,7 @@ public class DAO {
     /**
      * Опциональный метод удаления таблицы
      */
+    @Override
     public void dropTable() {
         em.createNativeQuery("DROP table  if  EXISTS users");
     }
@@ -61,6 +67,7 @@ public class DAO {
     /**
      * Опциональный метод очистка таблицы
      */
+    @Override
     public void cleanTable() {
         em.createQuery("delete from User").executeUpdate();
     }
@@ -68,7 +75,9 @@ public class DAO {
     /**
      * Получение всех элементов таблицы
      */
+    @Override
     public List<User> getAll() {
-        return em.createQuery("From " + User.class.getSimpleName()).getResultList();
+        System.out.println(User.class.getSimpleName());
+        return em.createQuery("from User").getResultList();
     }
 }

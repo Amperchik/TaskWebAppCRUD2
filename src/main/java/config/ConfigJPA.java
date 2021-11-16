@@ -16,7 +16,7 @@ import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
-@ComponentScan({"service", "DAO", "model", "controller", "model"})
+@ComponentScan({"service", "dao", "model", "controller", "model"})
 public class ConfigJPA {
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
