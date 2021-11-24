@@ -5,6 +5,8 @@ import model.User;
 import java.util.List;
 
 public interface UserDao {
+    User getByUserName(String username);
+
     void create(User a);
 
     User read(long id);

@@ -1,12 +1,11 @@
 package service;
 
 import dao.UserDao;
-import dao.UserDaoImpl;
 import model.User;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 
 @Service
@@ -44,4 +43,14 @@ public class UserServiceImpl implements UserService {
         userDAO.update(user);
     }
 
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userDAO.getByUserName(username);
+        if (user == null) throw new UsernameNotFoundException(String.format("User '%s' не найден", username));
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), user.getAuthorities());
+    }
+
+    public User findByLastName(String lastName) {
+        return userDAO.getByUserName(lastName);
+    }
 }

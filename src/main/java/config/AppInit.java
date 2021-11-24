@@ -24,11 +24,13 @@ public class AppInit extends AbstractAnnotationConfigDispatcherServletInitialize
     protected Class<?>[] getRootConfigClasses() {
         return new Class<?>[]{ConfigJPA.class};
     }
+
     // Добавление конфигурации, в которой инициализируем ViewResolver, для корректного отображения jsp.
     @Override
     protected Class<?>[] getServletConfigClasses() {
         return new Class<?>[]{ConfigApp.class};
     }
+
     // Данный метод указывает url, на котором будет базироваться приложение
     @Override
     protected String[] getServletMappings() {

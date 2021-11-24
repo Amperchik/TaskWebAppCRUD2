@@ -12,6 +12,14 @@ public class UserDaoImpl implements UserDao {
     @PersistenceContext
     private EntityManager em;
 
+    @Override
+    public User getByUserName(String lastName) {
+        return (User) em.createQuery("select u from User u where u.lastName=:username")
+                .setParameter("username", lastName)
+                .getSingleResult();
+
+    }
+
     /**
      * Метод Create - даешь в агрументы сущность, метод ее добавляет в контекст постоянства
      * и при commit/rollback обновит базу
@@ -78,6 +86,6 @@ public class UserDaoImpl implements UserDao {
     @Override
     public List<User> getAll() {
         System.out.println(User.class.getSimpleName());
-        return em.createQuery("from User").getResultList();
+        return em.createQuery("Select u from User u").getResultList();
     }
 }
