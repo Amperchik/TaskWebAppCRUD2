@@ -17,32 +17,26 @@ public class UserServiceImpl implements UserService {
         this.userDAO = userDAO;
     }
 
-
     @Override
     public List<User> getUsers() {
         return userDAO.getAll();
     }
-
     @Override
     public void addUser(User user) {
         userDAO.create(user);
     }
-
     @Override
     public User getUserId(long id) {
         return userDAO.read(id);
     }
-
     @Override
     public void deleteById(long id) {
         userDAO.delete(id);
     }
-
     @Override
     public void updateUser(User user) {
         userDAO.update(user);
     }
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userDAO.getByUserName(username);

@@ -36,16 +36,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return authProvider;
     }
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth)  {
         auth.authenticationProvider(authenticationProvider());
     }
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // http.csrf().disable(); - попробуйте выяснить сами, что это даёт
         http.authorizeRequests()
-                .antMatchers("/").authenticated() // доступность всем
-                .antMatchers("/admin/**").hasAnyRole("ADMIN")
+                .antMatchers("/").authenticated()// доступность всем
                 .antMatchers("/user").hasAnyRole("USER","ADMIN")// разрешаем входить на /user пользователям с ролью User
+                .antMatchers("/admin/**").hasAnyRole("ADMIN")
                 .and().formLogin()  // Spring сам подставит свою логин форму
                 .successHandler(successUserHandler); // подключаем наш SuccessHandler для перенеправления по ролям
     }
